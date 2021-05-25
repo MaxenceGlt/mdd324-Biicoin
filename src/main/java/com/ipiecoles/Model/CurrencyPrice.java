@@ -1,4 +1,4 @@
-package com.ipiecoles;
+package com.ipiecoles.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;

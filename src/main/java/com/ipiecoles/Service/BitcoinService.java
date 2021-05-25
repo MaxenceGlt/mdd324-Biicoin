@@ -1,7 +1,11 @@
-package com.ipiecoles;
+package com.ipiecoles.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.ipiecoles.Model.Bitcoin;
+import com.ipiecoles.Model.Currency;
+import com.ipiecoles.Model.CurrencyPrice;
+import com.ipiecoles.Model.Error;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -11,6 +15,7 @@ import org.apache.http.util.EntityUtils;
 
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class BitcoinService {
 
@@ -102,16 +107,16 @@ public class BitcoinService {
             // En fonction de chaque devise initialize la valeur
             switch (cur) {
                 case "EUR":
-                    currencyPrice.setEUR(convertedObject.get("EUR").getAsDouble() * bitcoinAmount);
+                    currencyPrice.setEUR(Math.round( (convertedObject.get("EUR").getAsDouble() * bitcoinAmount) * 100d ) / 100d );
                     break;
                 case "USD":
-                    currencyPrice.setUSD(convertedObject.get("USD").getAsDouble() * bitcoinAmount);
+                    currencyPrice.setUSD(Math.round( (convertedObject.get("USD").getAsDouble() * bitcoinAmount)  * 100d ) / 100d );
                     break;
                 case "GBP":
-                    currencyPrice.setGBP(convertedObject.get("GBP").getAsDouble() * bitcoinAmount);
+                    currencyPrice.setGBP(Math.round( (convertedObject.get("GBP").getAsDouble() * bitcoinAmount)  * 100d ) / 100d );
                     break;
                 case "JPY":
-                    currencyPrice.setJPY(convertedObject.get("JPY").getAsDouble() * bitcoinAmount);
+                    currencyPrice.setJPY(Math.round( (convertedObject.get("JPY").getAsDouble() * bitcoinAmount)  * 100d ) / 100d );
                     break;
                 default:
                     break;
