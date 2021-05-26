@@ -8,7 +8,7 @@ public class Application {
     public static void main(String[] args) {
         ApiService apiService = new ApiService();
         BitcoinService bitcoinService = new BitcoinService(apiService);
-        System.out.println(bitcoinService.getPriceForCurrency(3, "EUR,USD"));
+        System.out.println(bitcoinService.getPriceForCurrency(3, "azeaze,USD"));
     }
 
 }

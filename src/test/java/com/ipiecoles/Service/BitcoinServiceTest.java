@@ -23,6 +23,25 @@ class BitcoinServiceTest {
         Assertions.assertThat(result).isEqualTo("{\"bitcoinAmount\":3.0,\"currenciesEquivalent\":{\"EUR\":90000.0}}");
     }
 
+    @Test
+    void getPriceForCurrencyWithUnknowDevice() {
+        //Given + When
+        String result = new BitcoinService(apiService).getPriceForCurrency(3, "AZE");
 
+        //Then
+        Assertions.assertThat(result).isEqualTo("{\"error\":\"La devise n\\u0027est pas reconnue\"}"); //problème du retour bizarre dans le JSON ("n\u0027est")
+    }
+
+    @Test
+    void getPriceForCurrencyWithInnaccessibleAPI() {
+        //Given
+        Mockito.when(apiService.getPriceCurrencyFromApi(Mockito.anyString())).thenReturn("{\"error\":\"Le service de Bitcoin est indisponible\"}");
+
+        //When
+        String result = new BitcoinService(apiService).getPriceForCurrency(3, "EUR");
+
+        //Then
+        Assertions.assertThat(result).isEqualTo("{\"error\":\"Le service de Bitcoin est indisponible\"}");
+    }
 
 }
