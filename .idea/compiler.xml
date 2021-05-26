@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="mdd324-Biicoin" target="1.5" />
+      <module name="mdd324-Biicoin" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
