@@ -7,21 +7,17 @@ import com.ipiecoles.Model.Currency;
 import com.ipiecoles.Model.CurrencyPrice;
 import com.ipiecoles.Model.Error;
 import org.apache.commons.lang3.EnumUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-
-
-import java.io.IOException;
-import java.text.DecimalFormat;
 
 public class BitcoinService {
 
     final static String MSG_ERROR_FROM_API = "Le service de Bitcoin est indisponible";
     final static String MSG_ERROR_CURRENCY = "La devise n'est pas reconnue";
     Gson gson = new Gson();
+    ApiService apiService;
+
+    public BitcoinService(ApiService apiService) {
+        this.apiService = apiService;
+    }
 
     /**
      * Méthode qui récupère le prix actuel du bitcoin en fonction des devises et renvoie la somme totale pour x bitcoin
@@ -54,7 +50,7 @@ public class BitcoinService {
          *
          * Si pas de retour ou erreur dans le retour : Récupération du message d'erreur
          */
-        String result = this.getPriceCurrencyFromApi("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=".concat(currency));
+        String result = apiService.getPriceCurrencyFromApi("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=".concat(currency));
         // Si la méthode retourne une erreur on stop le process
         if (result.equals(MSG_ERROR_FROM_API)) {
             // Retourne un JSON d'erreur
@@ -71,28 +67,6 @@ public class BitcoinService {
         return gson.toJson(bitcoinObject);
     }
 
-    /**
-     * Execute un appel GET à l'api et récupère le résultat
-     * @param url
-     * @return Renvoie un STRING qui contient soit le résultat de l'api soit un msg d'erreur
-     */
-    public String getPriceCurrencyFromApi(String url) {
-        String resultFromApi;
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpGet httpGet = new HttpGet(url);
-            resultFromApi = httpClient.execute(httpGet, httpResponse -> {
-                int status = httpResponse.getStatusLine().getStatusCode();
-                if (status < 200 || status >= 300) {
-                    return MSG_ERROR_FROM_API;
-                }
-                HttpEntity entity = httpResponse.getEntity();
-                return entity != null ? EntityUtils.toString(entity) : null;
-            });
-        } catch (IOException e) {
-            return MSG_ERROR_FROM_API;
-        }
-        return resultFromApi;
-    }
 
     /**
      * Méthode qui attribue aux variables de CurrencyPrice la valeur du cours du Bitcoin * bitcoinAmount
