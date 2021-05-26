@@ -10,7 +10,7 @@ import org.apache.commons.lang3.EnumUtils;
 
 public class BitcoinService {
 
-    final static String MSG_ERROR_FROM_API = "Le service de Bitcoin est indisponible";
+    public final static String MSG_ERROR_FROM_API = "Le service de Bitcoin est indisponible";
     final static String MSG_ERROR_CURRENCY = "La devise n'est pas reconnue";
     Gson gson = new Gson();
     ApiService apiService;
