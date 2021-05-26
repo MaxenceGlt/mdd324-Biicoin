@@ -10,6 +10,10 @@ import com.ipiecoles.Service.BitcoinService;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.ipiecoles.Service.BitcoinService.MSG_ERROR_FROM_API;
+
+
 public class Handler implements RequestHandler<BitcoinInput, GatewayResponse> {
     @Override
     public GatewayResponse handleRequest(BitcoinInput bitcoinInput, Context context) {
@@ -18,16 +22,15 @@ public class Handler implements RequestHandler<BitcoinInput, GatewayResponse> {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("Access-Control-Allow-Origin", "https://pjvilloud.github.io");
-        String result = "";
-        try {
-            result = bitcoinService.getPriceForCurrency(bitcoinInput.getBitcoinAmount(),bitcoinInput.getCurrencyList());
-
-        } catch (IOException e) {
-            //Gestion d'erreur
-            return new GatewayResponse("{\"error\":\"Problème lors de la récupération de la citation du jour\")", headers, 500);
+        String body = "";
+        if(bitcoinInput==null){
+            return new GatewayResponse(body, headers, 500);
         }
-        String body = new Gson().toJson(result);
+        body = bitcoinService.getPriceForCurrency(bitcoinInput.getBitcoinAmount(),bitcoinInput.getCurrencyList());
 
+        if(body.equals(new Gson().toJson(MSG_ERROR_FROM_API))) {
+            return new GatewayResponse(body, headers, 500);
+        }
         return new GatewayResponse(body, headers, 200);
     }
 }
