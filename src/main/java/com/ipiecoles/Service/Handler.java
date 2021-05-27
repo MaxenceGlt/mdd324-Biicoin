@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.ipiecoles.Model.BitcoinEntry;
 import com.ipiecoles.Model.Error;
+import com.ipiecoles.Model.GatewayRequest;
 import com.ipiecoles.Model.GatewayResponse;
 
 
@@ -13,10 +14,11 @@ import java.util.Map;
 
 import static com.ipiecoles.Service.BitcoinService.MSG_ERROR_FROM_API;
 
-public class Handler implements RequestHandler<BitcoinEntry, GatewayResponse> {
+public class Handler implements RequestHandler<GatewayRequest, GatewayResponse> {
 
     @Override
-    public GatewayResponse handleRequest(BitcoinEntry bitcoinEntry, Context context) {
+    public GatewayResponse handleRequest(GatewayRequest gatewayRequest, Context context) {
+        BitcoinEntry bitcoinEntry = new Gson().fromJson(gatewayRequest.getBody(), BitcoinEntry.class);
         String body = "";
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
