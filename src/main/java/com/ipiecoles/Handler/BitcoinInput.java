@@ -5,11 +5,6 @@ public class BitcoinInput {
     private Integer bitcoinAmount;
     private String currencyList;
 
-    public BitcoinInput(int bitcoinAmount, String currencyList) {
-        this.bitcoinAmount = bitcoinAmount;
-        this.currencyList = currencyList;
-    }
-
     public Integer getBitcoinAmount() {
         return bitcoinAmount;
     }

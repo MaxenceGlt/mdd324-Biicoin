@@ -14,11 +14,11 @@ import java.util.Map;
 import static com.ipiecoles.Service.BitcoinService.MSG_ERROR_FROM_API;
 
 
-public class Handler implements RequestHandler<BitcoinInput, GatewayResponse> {
+public class Handler implements RequestHandler<GatewayRequest, GatewayResponse> {
     @Override
-    public GatewayResponse handleRequest(BitcoinInput bitcoinInput, Context context) {
-        ApiService apiService = new ApiService();
-        BitcoinService bitcoinService = new BitcoinService(apiService);
+    public GatewayResponse handleRequest(GatewayRequest o, Context context) {
+        BitcoinInput bitcoinInput = new Gson().fromJson(o.getBody(),BitcoinInput.class);
+        BitcoinService bitcoinService = new BitcoinService(new ApiService());
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("Access-Control-Allow-Origin", "https://pjvilloud.github.io");
