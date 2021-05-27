@@ -17,7 +17,7 @@ public class ApiService {
      * @param url
      * @return Renvoie un STRING qui contient soit le résultat de l'api soit un msg d'erreur
      */
-    public String getPriceCurrencyFromApi(String url) {
+    public String getHttpRequest(String url) {
         String resultFromApi;
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(url);

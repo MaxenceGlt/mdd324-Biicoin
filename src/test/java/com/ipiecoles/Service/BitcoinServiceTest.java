@@ -16,7 +16,7 @@ class BitcoinServiceTest {
     @Test
     void getPriceForCurrency() {
         // Given
-        Mockito.when(apiService.getPriceCurrencyFromApi(Mockito.anyString())).thenReturn("{\"EUR\":30000.00}");
+        Mockito.when(apiService.getHttpRequest(Mockito.anyString())).thenReturn("{\"EUR\":30000.00}");
         // When
         String result = new BitcoinService(apiService).getPriceForCurrency(3, "EUR");
         // Then
@@ -35,7 +35,7 @@ class BitcoinServiceTest {
     @Test
     void getPriceForCurrencyWithInnaccessibleAPI() {
         //Given
-        Mockito.when(apiService.getPriceCurrencyFromApi(Mockito.anyString())).thenReturn("{\"error\":\"Le service de Bitcoin est indisponible\"}");
+        Mockito.when(apiService.getHttpRequest(Mockito.anyString())).thenReturn("{\"error\":\"Le service de Bitcoin est indisponible\"}");
 
         //When
         String result = new BitcoinService(apiService).getPriceForCurrency(3, "EUR");

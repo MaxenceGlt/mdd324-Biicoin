@@ -10,7 +10,7 @@ import org.apache.commons.lang3.EnumUtils;
 
 public class BitcoinService {
 
-    public final static String MSG_ERROR_FROM_API = "Le service de Bitcoin est indisponible";
+    public final static String MSG_ERROR_FROM_API = "Le service est indisponible";
     final static String MSG_ERROR_CURRENCY = "La devise n'est pas reconnue";
     Gson gson = new Gson();
     ApiService apiService;
@@ -50,7 +50,7 @@ public class BitcoinService {
          *
          * Si pas de retour ou erreur dans le retour : Récupération du message d'erreur
          */
-        String result = apiService.getPriceCurrencyFromApi("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=".concat(currency));
+        String result = apiService.getHttpRequest("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=".concat(currency));
         // Si la méthode retourne une erreur on stop le process
         if (result.equals(MSG_ERROR_FROM_API)) {
             // Retourne un JSON d'erreur
