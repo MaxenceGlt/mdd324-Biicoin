@@ -9,7 +9,9 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
 
-import static com.ipiecoles.Service.BitcoinService.MSG_ERROR_FROM_API;
+import static com.ipiecoles.Service.BitcoinService.MSG_ERROR_FROM_API_BITCOIN;
+import static com.ipiecoles.Service.MeteoService.MSG_ERROR_FROM_API_METEO;
+
 
 public class ApiService {
 
@@ -25,13 +27,31 @@ public class ApiService {
             resultFromApi = httpClient.execute(httpGet, httpResponse -> {
                 int status = httpResponse.getStatusLine().getStatusCode();
                 if (status < 200 || status >= 300) {
-                    return MSG_ERROR_FROM_API;
+                    return MSG_ERROR_FROM_API_BITCOIN;
                 }
                 HttpEntity entity = httpResponse.getEntity();
                 return entity != null ? EntityUtils.toString(entity) : null;
             });
         } catch (IOException e) {
-            return MSG_ERROR_FROM_API;
+            return MSG_ERROR_FROM_API_BITCOIN;
+        }
+        return resultFromApi;
+    }
+
+    public String getMeteoFromApi(String url) {
+        String resultFromApi;
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpGet httpGet = new HttpGet(url);
+            resultFromApi = httpClient.execute(httpGet, httpResponse -> {
+                int status = httpResponse.getStatusLine().getStatusCode();
+                if (status < 200 || status >= 300) {
+                    return MSG_ERROR_FROM_API_METEO;
+                }
+                HttpEntity entity = httpResponse.getEntity();
+                return entity != null ? EntityUtils.toString(entity) : null;
+            });
+        } catch (IOException e) {
+            return MSG_ERROR_FROM_API_METEO;
         }
         return resultFromApi;
     }

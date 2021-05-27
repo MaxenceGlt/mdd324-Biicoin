@@ -11,9 +11,7 @@ public class Bitcoin {
         return currenciesEquivalent;
     }
 
-    public void setCurrenciesEquivalent(CurrencyPrice currenciesEquivalent) {
-        this.currenciesEquivalent = currenciesEquivalent;
-    }
+    public void setCurrenciesEquivalent(CurrencyPrice currenciesEquivalent) {this.currenciesEquivalent = currenciesEquivalent; }
 
 
     public double getBitcoinAmount() {

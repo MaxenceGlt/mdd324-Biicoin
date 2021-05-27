@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ipiecoles.Service.BitcoinService.MSG_ERROR_FROM_API;
+import static com.ipiecoles.Service.BitcoinService.MSG_ERROR_FROM_API_BITCOIN;
 
 
 public class Handler implements RequestHandler<GatewayRequest, GatewayResponse> {
@@ -28,7 +28,7 @@ public class Handler implements RequestHandler<GatewayRequest, GatewayResponse> 
         }
         body = bitcoinService.getPriceForCurrency(bitcoinInput.getBitcoinAmount(),bitcoinInput.getCurrencyList());
 
-        if(body.equals(new Gson().toJson(MSG_ERROR_FROM_API))) {
+        if(body.equals(new Gson().toJson(MSG_ERROR_FROM_API_BITCOIN))) {
             return new GatewayResponse(body, headers, 500);
         }
         return new GatewayResponse(body, headers, 200);

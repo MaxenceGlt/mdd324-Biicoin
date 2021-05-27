@@ -1,4 +1,4 @@
-com\ipiecoles\Handler\GatewayRequest.class
 com\ipiecoles\Handler\BitcoinInput.class
 com\ipiecoles\Handler\Handler.class
+com\ipiecoles\Handler\GatewayRequest.class
 com\ipiecoles\Handler\GatewayResponse.class

@@ -10,8 +10,8 @@ import org.apache.commons.lang3.EnumUtils;
 
 public class BitcoinService {
 
-    final static String MSG_ERROR_CURRENCY = "La devise n'est pas reconnue";
-    public final static String MSG_ERROR_FROM_API = "Le service de Bitcoin est indisponible";
+    final static String MSG_ERROR_CURRENCY_BITCOIN = "La devise n'est pas reconnue";
+    public final static String MSG_ERROR_FROM_API_BITCOIN = "Le service de Bitcoin est indisponible";
     ApiService apiService;
     Gson gson = new Gson();
 
@@ -37,7 +37,7 @@ public class BitcoinService {
         for ( String cur : listCurrency) {
             if ( !EnumUtils.isValidEnum(Currency.class, cur) ) {
                 // Retourne un JSON d'erreur
-                return gson.toJson(new Error(MSG_ERROR_CURRENCY));
+                return gson.toJson(new Error(MSG_ERROR_CURRENCY_BITCOIN));
             }
         }
         // Appel à l'api : https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=EUR,USD
@@ -52,9 +52,9 @@ public class BitcoinService {
          */
         String result = this.apiService.getPriceCurrencyFromApi("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=".concat(currency));
         // Si la méthode retourne une erreur on stop le process
-        if (result.equals(MSG_ERROR_FROM_API)) {
+        if (result.equals(MSG_ERROR_FROM_API_BITCOIN)) {
             // Retourne un JSON d'erreur
-            return gson.toJson(new Error(MSG_ERROR_FROM_API));
+            return gson.toJson(new Error(MSG_ERROR_FROM_API_BITCOIN));
         } else {
             // Récupération des éléments renvoyé par l'api
             JsonObject convertedObject = new Gson().fromJson(result, JsonObject.class);
