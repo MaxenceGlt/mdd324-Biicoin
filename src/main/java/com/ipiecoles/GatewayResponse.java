@@ -23,6 +23,7 @@ public class GatewayResponse {
         this.statusCode = statusCode;
     }
 
+
     public String getBody() {
         return body;
     }
@@ -34,4 +35,14 @@ public class GatewayResponse {
     public int getStatusCode() {
         return statusCode;
     }
+
+    @Override
+    public String toString() {
+        return "GatewayResponse{" +
+                "body='" + body + '\'' +
+                ", headers=" + headers +
+                ", statusCode=" + statusCode +
+                '}';
+    }
+
 }
